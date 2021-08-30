@@ -1,4 +1,4 @@
-# Simple Linear Regression 
+# Simple Linear Regression (R CODE)
 
 ## Store the response variable as $y$ and the predictor variable as $x$
 
@@ -72,7 +72,7 @@ F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12
 
 ## Plot each observation (x,y) with the fitted regression line
 
-
+*Code 6:*
 ```R
 plot(output ~ input, data = DATASET,
      xlab = " name of the Input variable",
@@ -84,5 +84,7 @@ plot(output ~ input, data = DATASET,
 abline(model, lwd = 3, col = "darkorange")
 ```
 
+*Code 6 result:*
 
+![](https://raw.githubusercontent.com/mltools-org/linear-regression/gh-pages/plot1.png)
 
