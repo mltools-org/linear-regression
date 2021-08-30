@@ -1,39 +1,88 @@
-## Linear Regression 
+# Simple Linear Regression 
 
-You can use the [editor on GitHub](https://github.com/mltools-org/linear-regression/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## Store the response variable as $y$ and the predictor variable as $x$
 
-:link:
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+*Code 1:*
+```R
+x = DATASET$input
+y = DATASET$output
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Compute the 3 Sum of squares definitions:
 
-### Jekyll Themes
+*Code 2:*
+```R
+Sxy = sum((x - mean(x)) * (y - mean(y)))
+Sxx = sum((x - mean(x)) ^ 2)
+Syy = sum((y - mean(y)) ^ 2)
+c(Sxy, Sxx, Syy)
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/mltools-org/linear-regression/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+*Code 2 result:*
+```R
+[1]  5387.40  1370.00 32538.98
+```
 
-### Support or Contact
+## Find the intercept and slope coefficients using Sum of squares definitions
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+*Code 3:*
+```R
+beta_1_hat = Sxy / Sxx
+beta_0_hat = mean(y) - beta_1_hat * mean(x)
+c(beta_0_hat, beta_1_hat)
+```
+*Code 3 result:*
+```R
+[1] -17.579095   3.932409
+```
+
+## Estimation using the lm() function
+
+*Code 4:*
+```R
+model = lm(ouput ~ input, data = DATASET)
+```
+
+## Summary the result of the *model*
+
+*Code 5:*
+```R
+summary(model)
+```
+*Code 5 result:*
+```R
+Call:
+lm(formula = output ~ input, data = DATASET)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-29.069  -9.525  -2.272   9.215  43.201 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -17.5791     6.7584  -2.601   0.0123 *  
+input         3.9324     0.4155   9.464 1.49e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 15.38 on 48 degrees of freedom
+Multiple R-squared:  0.6511,	Adjusted R-squared:  0.6438 
+F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12
+```
+
+## Plot each observation (x,y) with the fitted regression line
+
+
+```R
+plot(output ~ input, data = DATASET,
+     xlab = " name of the Input variable",
+     ylab = "name of the Output variable",
+     main = "Title of your plot,
+     pch  = 20,
+     cex  = 2,
+     col  = "grey")
+abline(model, lwd = 3, col = "darkorange")
+```
+
+
+
